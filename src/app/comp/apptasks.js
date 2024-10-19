@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import startlogo from './svg/start.svg';
+import stoplogo from './svg/stop.svg';
 
 const formatDuration = (seconds) => {
     const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
@@ -47,7 +48,7 @@ export default function AppTask({tasks, pushTimeStamp}){
                 }}>
                     <div>{task.task}</div>
                     <DurationDiv task={task}/>
-                    <Image src={startlogo} alt="delete" width="38" height="38" onClick={() => handleStart(task.id)}/>
+                    <Image src={task.isrunning ? stoplogo : startlogo} alt="delete" width="38" height="38" onClick={() => handleStart(task.id)}/>
                 </div>
                 </>
             )
