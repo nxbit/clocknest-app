@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 
 const MainClock = () => {
+    // Set the time state to the current time
     const [time, setTime] = useState(new Date());
-
+    // Update the time state every second
     useEffect(() => {
         const timerId = setInterval(() => {
             setTime(new Date());
@@ -11,7 +12,7 @@ const MainClock = () => {
 
         return () => clearInterval(timerId);
     }, []);
-
+    // Format the time to display in 12-hour format
     const formatTime = (date) => {
         let hours = date.getHours();
         const minutes = date.getMinutes();

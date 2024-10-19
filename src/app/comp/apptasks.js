@@ -1,7 +1,12 @@
 import startlogo from './svg/start.svg';
 import Image from 'next/image';
 
-export default function AppTask({tasks}){
+export default function AppTask({tasks, pushTimeStamp}){
+    // handleStart is a function that takes an id as an argument and pushes a timestamp to the task's timestamp array.
+    const handleStart = (id) => {
+        alert(id);
+        pushTimeStamp(id, new Date());
+    };
 
     return(
     <>
@@ -15,7 +20,7 @@ export default function AppTask({tasks}){
                 }}>
                     <div>{task.task}</div>
                     <div>00:00:00</div>
-                    <Image src={startlogo} alt="delete" width="38" height="38" />
+                    <Image src={startlogo} alt="delete" width="38" height="38" onClick={() => handleStart(task.id)}/>
                 </div>
             )
         })
