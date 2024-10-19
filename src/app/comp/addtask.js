@@ -11,6 +11,7 @@
 import { useState, useCallback } from "react";
 import styles from "../page.module.css";
 import AppTask from "./apptasks";
+import { Parser } from "json2csv";
 
 /**
  * Custom hook to manage the state of tasks.
@@ -70,6 +71,21 @@ export default function AddTask() {
         setShowTaskInput((prevShowTaskInput) => !prevShowTaskInput);
     }, []);
 
+    const exportTasksClick = useCallback(() => {
+        const json2csvParser = new Parser();
+        const csv = json2csvParser.parse(tasks.map(({ task, duration }) => ({ task, duration })));
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "tasks.csv";
+        document.body.appendChild(a); // Append to body to ensure it works in all browsers
+        a.click();
+        document.body.removeChild(a); // Clean up after click
+        URL.revokeObjectURL(url);
+    }, [tasks]);
+
     /**
      * Handles the addition of a new task.
      */
@@ -100,6 +116,14 @@ export default function AddTask() {
                     onClick={showTaskInputClick}
                 >
                     Add Task
+                </a>
+                <a
+                    className={styles.secondary}
+                    href="#"
+                    rel="noopener noreferrer"
+                    onClick={exportTasksClick}
+                >
+                    Export Tasks
                 </a>
             </div>
 

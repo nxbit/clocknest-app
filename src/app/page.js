@@ -16,11 +16,6 @@ export default function Home() {
       <main className={styles.main}>
         <AddTask />
       </main>
-      <footer className={styles.footer}>
-        <a href="#" rel="noopener noreferrer">
-          About
-        </a>
-      </footer>
     </div>
   );
 }
