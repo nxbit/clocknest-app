@@ -27,7 +27,7 @@ export default function AppTask({tasks, pushTimeStamp}){
     const handleStart = (id) => {
         pushTimeStamp(id, new Date());
     };
-    
+    // DurationDiv is a component that takes a task as a prop and returns a div that displays the duration of the task.
     const DurationDiv = ({task}) => {
         var taskDuration = task.duration.toFixed(2);
         return(
