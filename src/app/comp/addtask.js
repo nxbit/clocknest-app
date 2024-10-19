@@ -19,7 +19,20 @@ export default function AddTask(){
             updatedTasks[taskIndex].timestamps.push(timestamp);
             setTasks(updatedTasks);
         }
-        // TODO: Add logic to calculate the duration of the task
+        // Calculate the duration of the task
+        const timestamps = updatedTasks[taskIndex].timestamps;
+        // Remove used timestamps for duration calculation
+        let duration = 0;
+        while (timestamps.length >= 2) {
+            const start = timestamps.shift();
+            const end = timestamps.shift();
+            if (end) {
+                duration += (new Date(end) - new Date(start)) / 1000;
+            }
+        }
+        
+        updatedTasks[taskIndex].duration += duration;
+        setTasks(updatedTasks);
     }
 
     // showTaskInput is a boolean that toggles the task input form
