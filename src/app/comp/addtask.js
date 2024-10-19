@@ -1,43 +1,30 @@
-/**
- * AddTask component allows users to add and manage tasks.
- * 
- * @component
- * @example
- * return (
- *   <AddTask />
- * )
- */
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import styles from "../page.module.css";
 import AppTask from "./apptasks";
 import { Parser } from "json2csv";
 
-/**
- * Custom hook to manage the state of tasks.
- * 
- * @returns {Array} An array containing the tasks state and a function to update it.
- */
 export default function AddTask() {
+    // State to store the list of tasks
     const [tasks, setTasks] = useState([]);
+    // State to toggle the task input visibility
     const [showTaskInput, setShowTaskInput] = useState(false);
+    // State to store the current task name input
     const [taskName, setTaskName] = useState("");
+    // State to check if the component is client-side rendered
+    const [isClient, setIsClient] = useState(false);
 
-    /**
-     * Appends a new task to the tasks state.
-     * 
-     * @param {Object} task - The task object to be added.
-     */
+    // Effect to set the component as client-side rendered
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // Callback to append a new task to the tasks list
     const appendTask = useCallback((task) => {
         setTasks((prevTasks) => [...prevTasks, task]);
     }, []);
 
-    /**
-     * Adds a timestamp to a specific task and calculates the duration.
-     * 
-     * @param {string} taskid - The ID of the task to update.
-     * @param {string} timestamp - The timestamp to be added.
-     */
+    // Callback to push a timestamp to a specific task
     const pushTimeStamp = useCallback((taskid, timestamp) => {
         setTasks((prevTasks) => {
             const taskIndex = prevTasks.findIndex((t) => t.id === taskid);
@@ -64,13 +51,12 @@ export default function AddTask() {
         });
     }, []);
 
-    /**
-     * Toggles the visibility of the task input field.
-     */
+    // Callback to toggle the task input visibility
     const showTaskInputClick = useCallback(() => {
         setShowTaskInput((prevShowTaskInput) => !prevShowTaskInput);
     }, []);
 
+    // Callback to export tasks as a CSV file
     const exportTasksClick = useCallback(() => {
         const json2csvParser = new Parser();
         const csv = json2csvParser.parse(tasks.map(({ task, duration }) => ({ task, duration })));
@@ -86,9 +72,7 @@ export default function AddTask() {
         URL.revokeObjectURL(url);
     }, [tasks]);
 
-    /**
-     * Handles the addition of a new task.
-     */
+    // Callback to handle adding a new task
     const handleAddTask = useCallback(() => {
         if (!taskName.trim()) return;
 
@@ -105,6 +89,11 @@ export default function AddTask() {
         appendTask(task);
         setTaskName("");
     }, [taskName, appendTask]);
+
+    // Return null if the component is not client-side rendered
+    if (!isClient) {
+        return null;
+    }
 
     return (
         <>
