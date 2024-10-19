@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import startlogo from './svg/start.svg';
 
+const formatDuration = (seconds) => {
+    const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+};
+
 // RunningTimer is a component that takes an intDuration as a prop and returns a div that displays the duration of the task.
 function RunningTimer({intDuration}) {
     const [duration, setDuration] = useState(intDuration);
@@ -12,7 +19,7 @@ function RunningTimer({intDuration}) {
 
         return () => clearInterval(interval);
     }, []);
-    return <div>{duration.toFixed(2)}</div>;
+    return <div>{formatDuration(duration.toFixed(2))}</div>;
 };
 
 export default function AppTask({tasks, pushTimeStamp}){
@@ -20,10 +27,11 @@ export default function AppTask({tasks, pushTimeStamp}){
     const handleStart = (id) => {
         pushTimeStamp(id, new Date());
     };
+    
     const DurationDiv = ({task}) => {
         var taskDuration = task.duration.toFixed(2);
         return(
-            task.timestamps.length == 1 ? <RunningTimer intDuration={task.duration}/> : <div>{taskDuration}</div>
+            task.timestamps.length == 1 ? <RunningTimer intDuration={task.duration}/> : <div>{formatDuration(taskDuration)}</div>
         )
     }
 
@@ -31,8 +39,6 @@ export default function AppTask({tasks, pushTimeStamp}){
     <>
     {
         tasks.map((task, index) => {
-            
-            
             return(<>
                 <div key={index} style={{
                     display: "grid",
