@@ -2,31 +2,28 @@
 import React, { useState, useEffect } from 'react';
 
 const MainClock = () => {
-    // Set the time state to the current time
+    // State to hold the current time
     const [time, setTime] = useState(new Date());
-    // Update the time state every second
-    useEffect(() => {
-        const timerId = setInterval(() => {
-            setTime(new Date());
-        }, 1000);
 
+    // useEffect to set up a timer that updates the time every second
+    useEffect(() => {
+        const timerId = setInterval(() => setTime(new Date()), 1000);
+        // Cleanup the interval on component unmount
         return () => clearInterval(timerId);
     }, []);
-    // Format the time to display in 12-hour format
+
+    // Function to format the time as a string
     const formatTime = (date) => {
-        let hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        const strTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds} ${ampm}`;
-        return strTime;
+        const hours = date.getHours() % 12 || 12; // Convert 24-hour time to 12-hour time
+        const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading zero to minutes
+        const seconds = date.getSeconds().toString().padStart(2, '0'); // Add leading zero to seconds
+        const ampm = date.getHours() >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+        return `${hours}:${minutes}:${seconds} ${ampm}`; // Return formatted time string
     };
 
     return (
         <div>
-            <h1>{formatTime(time)}</h1>
+            <h1>{formatTime(time)}</h1> {/* Display the formatted time */}
         </div>
     );
 };
