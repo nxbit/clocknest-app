@@ -13,11 +13,13 @@ export default function AddTask(){
     // pushTimeStamp pushes a timestamp to a task's timestamps array
     const pushTimeStamp = (taskid, timestamp) => {
         const taskIndex = tasks.findIndex((t) => t.id === taskid);
+        const updatedTasks = [...tasks];
+        // If the task is found, push the timestamp to the task's timestamps array
         if (taskIndex !== -1) {
-            const updatedTasks = [...tasks];
             updatedTasks[taskIndex].timestamps.push(timestamp);
             setTasks(updatedTasks);
         }
+        // TODO: Add logic to calculate the duration of the task
     }
 
     // showTaskInput is a boolean that toggles the task input form
