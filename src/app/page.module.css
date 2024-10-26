@@ -6,6 +6,9 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
+
+  border: 1px solid yellow;
+
   display: grid;
   grid-template-rows: 80px auto 20px;
   /*align-items: center;*/
@@ -27,11 +30,22 @@
   }
 }
 
+.centerItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .main {
   display: flex;
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  width: auto;
+  max-width: 600px;
+  min-width: 60%;
+  
 }
 
 .main ol {
@@ -86,7 +100,21 @@
   background: var(--foreground);
   color: var(--background);
 }
-
+.ctas select{
+  border-radius: 128px;
+  height: 48px;
+  padding: 0 20px;
+  border: none;
+  border: 1px solid transparent;
+  background: var(--foreground);
+  color: var(--background);
+}
+.options{
+  border-radius: 128px;
+  height: 50px;
+  background: var(--foreground);
+  color: var(--background);
+}
 a.primary {
   background: var(--foreground);
   color: var(--background);

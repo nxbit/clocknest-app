@@ -97,41 +97,43 @@ export default function AddTask() {
 
     return (
         <>
-            <div className={styles.ctas}>
-                <a
-                    className={styles.primary}
-                    href="#"
-                    rel="noopener noreferrer"
-                    onClick={showTaskInputClick}
-                >
-                    Add Task
-                </a>
-                <a
-                    className={styles.secondary}
-                    href="#"
-                    rel="noopener noreferrer"
-                    onClick={exportTasksClick}
-                >
-                    Export Tasks
-                </a>
-            </div>
-
-            {showTaskInput && (
+            <div style={{display: 'grid', gap: '1rem', justifyContent:'center', alignItems: 'center'}} >
                 <div className={styles.ctas}>
-                    <input
-                        type="text"
-                        id="task"
-                        name="task"
-                        placeholder="Set a task name"
-                        value={taskName}
-                        onChange={(e) => setTaskName(e.target.value)}
-                    />
-                    <a className={styles.primary} href="#" onClick={handleAddTask}>
-                        Add
+                    <a
+                        className={styles.primary}
+                        href="#"
+                        rel="noopener noreferrer"
+                        onClick={showTaskInputClick}
+                    >
+                        Add Task
+                    </a>
+                    <a
+                        className={styles.secondary}
+                        href="#"
+                        rel="noopener noreferrer"
+                        onClick={exportTasksClick}
+                    >
+                        Export Tasks
                     </a>
                 </div>
-            )}
-
+                <div>
+                {showTaskInput && (
+                    <div className={styles.ctas}>
+                        <input
+                            type="text"
+                            id="task"
+                            name="task"
+                            placeholder="Set a task name"
+                            value={taskName}
+                            onChange={(e) => setTaskName(e.target.value)}
+                        />
+                        <a className={styles.primary} href="#" onClick={handleAddTask}>
+                            Add
+                        </a>
+                    </div>
+                )}
+            </div>
+            </div>
             <AppTask tasks={tasks} pushTimeStamp={pushTimeStamp} setTasks={setTasks} />
         </>
     );

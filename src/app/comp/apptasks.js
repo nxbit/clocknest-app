@@ -3,6 +3,7 @@ import Image from 'next/image';
 import startlogo from './svg/start.svg';
 import stoplogo from './svg/stop.svg';
 import { formatDuration } from '../helper';
+import styles from "../page.module.css";
 
 // Component to display a running timer
 function RunningTimer({ intDuration }) {
@@ -18,7 +19,7 @@ function RunningTimer({ intDuration }) {
         return () => clearInterval(interval);
     }, []);
 
-    return <div>{formatDuration(duration.toFixed(2))}</div>;
+    return <div className={styles.centerItems}>{formatDuration(duration.toFixed(2))}</div>;
 }
 
 // Component to display either a running timer or a static duration
@@ -28,7 +29,7 @@ const DurationDiv = ({ task }) => {
     return task.timestamps.length === 1 ? (
         <RunningTimer intDuration={task.duration} />
     ) : (
-        <div>{formatDuration(taskDuration)}</div>
+        <div className={styles.centerItems}>{formatDuration(taskDuration)}</div>
     );
 };
 
@@ -61,20 +62,23 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
                         display: 'grid',
                         gridTemplateColumns: 'auto auto auto 38px',
                         borderBottom: '1px solid #ccc',
+                        padding: '1rem'
+
                     }}
+                    className={styles.ctas}
                 >
-                    <div>{task.task}</div>
+                    <div className={styles.centerItems}>{task.task}</div>
                     <DurationDiv task={task} />
                     <select
                         value={task.company || ""}
                         onChange={(e) => handleCompany(task.id, e.target.value)}
                     >
-                        <option value="" disabled>Company</option>
-                        <option value="Babybots">Babybots</option>
-                        <option value="TSP">TSP</option>
-                        <option value="ACS">ACS</option>
-                        <option value="Vantage">Vantage</option>
-                        <option value="Alliance">Alliance</option>
+                        <option className={styles.options} value="" disabled>Company</option>
+                        <option className={styles.options} value="Babybots">Babybots</option>
+                        <option className={styles.options} value="TSP">TSP</option>
+                        <option className={styles.options} value="ACS">ACS</option>
+                        <option className={styles.options} value="Vantage">Vantage</option>
+                        <option className={styles.options} value="Alliance">Alliance</option>
                     </select>
                     <Image
                         src={task.isrunning ? stoplogo : startlogo}
