@@ -11,15 +11,9 @@ export default function AddTask() {
     const [showTaskInput, setShowTaskInput] = useState(false);
     // State to store the current task name input
     const [taskName, setTaskName] = useState("");
-    // State to check if the component is client-side rendered
-    const [isClient, setIsClient] = useState(false);
     // State to store the company options
+    // TODO: Need to replace with dynamic data
     const [taskgrouping, setTaskGrouping] = useState(["Company A", "Company B", "Company C"]);
-
-    // Effect to set the component as client-side rendered
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
 
     // Callback to append a new task to the tasks list
     const appendTask = useCallback((task) => {
@@ -29,14 +23,18 @@ export default function AddTask() {
     // Callback to push a timestamp to a specific task
     const pushTimeStamp = useCallback((taskid, timestamp) => {
         setTasks((prevTasks) => {
+            // Find the task index in the tasks list
             const taskIndex = prevTasks.findIndex((t) => t.id === taskid);
+            // Return the previous tasks list if the task is not found
             if (taskIndex === -1) return prevTasks;
 
+            // Update the task with the new timestamp
             const updatedTasks = [...prevTasks];
             const task = { ...updatedTasks[taskIndex] };
             task.timestamps = [...task.timestamps, timestamp];
-            task.isrunning = true;
 
+            // Calculate the duration of the task from the timestamps
+            task.isrunning = true;
             let duration = 0;
             while (task.timestamps.length >= 2) {
                 const start = task.timestamps.shift();
@@ -47,6 +45,7 @@ export default function AddTask() {
                 }
             }
 
+            // Update the task duration and the tasks list
             task.duration += duration;
             updatedTasks[taskIndex] = task;
             return updatedTasks;
@@ -92,10 +91,7 @@ export default function AddTask() {
         setTaskName("");
     }, [taskName, appendTask]);
 
-    // Return null if the component is not client-side rendered
-    if (!isClient) {
-        return null;
-    }
+    
 
     return (
         <>
