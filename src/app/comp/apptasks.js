@@ -2,22 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import startlogo from './svg/start.svg';
 import stoplogo from './svg/stop.svg';
-
-// Function to format duration from seconds to HH:MM:SS format
-const formatDuration = (seconds) => {
-    const totalSeconds = parseFloat(Number(seconds).toFixed(1));
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const remainingSeconds = (totalSeconds % 60).toFixed(1);
-
-    if (hours > 0) {
-        return `${hours}h ${minutes}m ${remainingSeconds}s`;
-    } else if (minutes > 0) {
-        return `${minutes}m ${remainingSeconds}s`;
-    } else {
-        return `${remainingSeconds}s`;
-    }
-};
+import { formatDuration } from '../helper';
 
 // Component to display a running timer
 function RunningTimer({ intDuration }) {
