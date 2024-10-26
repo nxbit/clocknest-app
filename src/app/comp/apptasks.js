@@ -5,21 +5,19 @@ import stoplogo from './svg/stop.svg';
 
 // Function to format duration from seconds to HH:MM:SS format
 const formatDuration = (seconds) => {
-    seconds = parseFloat(Number(seconds).toFixed(1));
-    // Calculate hours, minutes, and remaining seconds
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
+    const totalSeconds = parseFloat(Number(seconds).toFixed(1));
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const remainingSeconds = (totalSeconds % 60).toFixed(1);
 
-    // Format based on the time ranges
     if (hours > 0) {
-        return `${hours.toFixed(0)}h ${minutes.toFixed(0)}m ${remainingSeconds.toFixed(1)}s`;
+        return `${hours}h ${minutes}m ${remainingSeconds}s`;
     } else if (minutes > 0) {
-        return `${minutes.toFixed(0)}m ${remainingSeconds.toFixed(1)}s`;
+        return `${minutes}m ${remainingSeconds}s`;
     } else {
-        return `${remainingSeconds.toFixed(1)}s`;
+        return `${remainingSeconds}s`;
     }
-}
+};
 
 // Component to display a running timer
 function RunningTimer({ intDuration }) {
