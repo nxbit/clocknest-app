@@ -99,6 +99,8 @@
   border: 1px solid transparent;
   background: var(--foreground);
   color: var(--background);
+  font-family: var(--font-geist-sans) !important;
+  font-size: 14px;
 }
 .ctas select{
   border-radius: 128px;
@@ -108,12 +110,15 @@
   border: 1px solid transparent;
   background: var(--foreground);
   color: var(--background);
+  font-size: 14px;
 }
 .options{
   border-radius: 128px;
   height: 50px;
   background: var(--foreground);
   color: var(--background);
+  font-family: var(--font-geist-sans) !important;
+  font-size: 14px;
 }
 a.primary {
   background: var(--foreground);
