@@ -54,6 +54,18 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
     const handleStart = useCallback((id) => {
         pushTimeStamp(id, new Date());
     }, [pushTimeStamp]);
+    const handleCompany = useCallback((id, company) => {
+        setTasks((prevTasks) => {
+            const taskIndex = prevTasks.findIndex((t) => t.id === id);
+            if (taskIndex === -1) return prevTasks;
+
+            const updatedTasks = [...prevTasks];
+            const task = { ...updatedTasks[taskIndex] };
+            task.company = company;
+            updatedTasks[taskIndex] = task;
+            setTasks(updatedTasks);
+        });
+    });
 
     return (
         <>
@@ -70,13 +82,7 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
                     <DurationDiv task={task} />
                     <select
                         value={task.company || ""}
-                        onChange={(e) => {
-                            const updatedTasks = tasks.map(t => 
-                                t.id === task.id ? { ...t, company: e.target.value } : t
-                            );
-                            // Assuming you have a function to update the tasks state
-                            setTasks(updatedTasks);
-                        }}
+                        onChange={(e) => handleCompany(task.id, e.target.value)}
                     >
                         <option value="" disabled>Company</option>
                         <option value="Babybots">Babybots</option>

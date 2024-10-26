@@ -59,7 +59,7 @@ export default function AddTask() {
     // Callback to export tasks as a CSV file
     const exportTasksClick = useCallback(() => {
         const json2csvParser = new Parser();
-        const csv = json2csvParser.parse(tasks.map(({ task, duration }) => ({ task, duration })));
+        const csv = json2csvParser.parse(tasks.map(({ company, task, duration }) => ({ company, task, duration })));
         const blob = new Blob([csv], { type: "text/csv" });
         const url = URL.createObjectURL(blob);
         
