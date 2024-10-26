@@ -60,7 +60,13 @@ export default function AddTask() {
     // Callback to export tasks as a CSV file
     const exportTasksClick = useCallback(() => {
         const json2csvParser = new Parser();
-        const csv = json2csvParser.parse(tasks.map(({ company, task, duration }) => ({ company, task, duration })));
+        
+        const csv = json2csvParser.parse(tasks.map(({ company, task, createddttm, duration }) => ({
+            company,
+            task,
+            createddttm: new Date(createddttm).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+            duration: (duration / 3600).toFixed(2) // Convert seconds to hours and round to two decimal points
+        })));
         const blob = new Blob([csv], { type: "text/csv" });
         const url = URL.createObjectURL(blob);
         
