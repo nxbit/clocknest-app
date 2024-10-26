@@ -6,12 +6,8 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-
-  border: 1px solid yellow;
-
   display: grid;
   grid-template-rows: 80px auto 20px;
-  /*align-items: center;*/
   justify-items: center;
   min-height: 100vh;
   padding: 5px;
