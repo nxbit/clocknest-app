@@ -8,24 +8,20 @@ import styles from "../page.module.css";
 // Component to display a running timer
 function RunningTimer({ intDuration }) {
     const [duration, setDuration] = useState(intDuration);
-
     useEffect(() => {
         // Update the duration every 100 milliseconds
         const interval = setInterval(() => {
             setDuration(prevDuration => prevDuration + 0.1);
         }, 100);
-
         // Cleanup interval on component unmount
         return () => clearInterval(interval);
     }, []);
-
     return <div className={styles.centerItems}>{formatDuration(duration.toFixed(2))}</div>;
-}
+};
 
 // Component to display either a running timer or a static duration
 const DurationDiv = ({ task }) => {
     const taskDuration = task.duration.toFixed(2);
-
     return task.timestamps.length === 1 ? (
         <RunningTimer intDuration={task.duration} />
     ) : (
@@ -34,12 +30,12 @@ const DurationDiv = ({ task }) => {
 };
 
 // Main component to display tasks and handle start/stop actions
-export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
-    
+export default function AppTask({ tasks, pushTimeStamp, setTasks, taskgrouping }) {
     // Callback to handle start/stop action
     const handleStart = useCallback((id) => {
         pushTimeStamp(id, new Date());
     }, [pushTimeStamp]);
+
     const handleCompany = useCallback((id, company) => {
         setTasks((prevTasks) => {
             const taskIndex = prevTasks.findIndex((t) => t.id === id);
@@ -49,9 +45,9 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
             const task = { ...updatedTasks[taskIndex] };
             task.company = company;
             updatedTasks[taskIndex] = task;
-            setTasks(updatedTasks);
+            return updatedTasks;
         });
-    });
+    }, [setTasks]);
 
     return (
         <>
@@ -63,7 +59,6 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
                         gridTemplateColumns: 'auto auto auto 38px',
                         borderBottom: '1px solid #ccc',
                         padding: '1rem'
-
                     }}
                     className={styles.ctas}
                 >
@@ -74,11 +69,9 @@ export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
                         onChange={(e) => handleCompany(task.id, e.target.value)}
                     >
                         <option className={styles.options} value="" disabled>Company</option>
-                        <option className={styles.options} value="Babybots">Babybots</option>
-                        <option className={styles.options} value="TSP">TSP</option>
-                        <option className={styles.options} value="ACS">ACS</option>
-                        <option className={styles.options} value="Vantage">Vantage</option>
-                        <option className={styles.options} value="Alliance">Alliance</option>
+                        {taskgrouping.map((group, index) => (
+                            <option key={index} className={styles.options} value={group}>{group}</option>
+                        ))}
                     </select>
                     <Image
                         src={task.isrunning ? stoplogo : startlogo}

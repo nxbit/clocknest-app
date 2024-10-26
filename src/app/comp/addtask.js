@@ -13,6 +13,8 @@ export default function AddTask() {
     const [taskName, setTaskName] = useState("");
     // State to check if the component is client-side rendered
     const [isClient, setIsClient] = useState(false);
+    // State to store the company options
+    const [taskgrouping, setTaskGrouping] = useState(["Company A", "Company B", "Company C"]);
 
     // Effect to set the component as client-side rendered
     useEffect(() => {
@@ -134,7 +136,7 @@ export default function AddTask() {
                 )}
             </div>
             </div>
-            <AppTask tasks={tasks} pushTimeStamp={pushTimeStamp} setTasks={setTasks} />
+            <AppTask tasks={tasks} pushTimeStamp={pushTimeStamp} setTasks={setTasks} taskgrouping={taskgrouping} />
         </>
     );
 }
