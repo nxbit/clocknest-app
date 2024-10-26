@@ -132,7 +132,7 @@ export default function AddTask() {
                 </div>
             )}
 
-            <AppTask tasks={tasks} pushTimeStamp={pushTimeStamp} />
+            <AppTask tasks={tasks} pushTimeStamp={pushTimeStamp} setTasks={setTasks} />
         </>
     );
 }

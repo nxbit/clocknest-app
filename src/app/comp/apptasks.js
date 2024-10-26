@@ -48,7 +48,7 @@ const DurationDiv = ({ task }) => {
 };
 
 // Main component to display tasks and handle start/stop actions
-export default function AppTask({ tasks, pushTimeStamp }) {
+export default function AppTask({ tasks, pushTimeStamp, setTasks }) {
     
     // Callback to handle start/stop action
     const handleStart = useCallback((id) => {
@@ -68,6 +68,23 @@ export default function AppTask({ tasks, pushTimeStamp }) {
                 >
                     <div>{task.task}</div>
                     <DurationDiv task={task} />
+                    <select
+                        value={task.company || ""}
+                        onChange={(e) => {
+                            const updatedTasks = tasks.map(t => 
+                                t.id === task.id ? { ...t, company: e.target.value } : t
+                            );
+                            // Assuming you have a function to update the tasks state
+                            setTasks(updatedTasks);
+                        }}
+                    >
+                        <option value="" disabled>Company</option>
+                        <option value="Babybots">Babybots</option>
+                        <option value="TSP">TSP</option>
+                        <option value="ACS">ACS</option>
+                        <option value="Vantage">Vantage</option>
+                        <option value="Alliance">Alliance</option>
+                    </select>
                     <Image
                         src={task.isrunning ? stoplogo : startlogo}
                         alt="toggle"
